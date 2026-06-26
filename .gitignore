@@ -1,0 +1,22 @@
+# Environnement virtuel
+venv/
+env/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Base de données
+*.db
+*.sqlite3
+
+# Variables d'environnement
+.env
+
+# Éditeurs / OS
+.vscode/
+.idea/
+.DS_Store
