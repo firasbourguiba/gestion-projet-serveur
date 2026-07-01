@@ -1,4 +1,4 @@
-"""Hashage des mots de passe, création/vérification du JWT et dépendance utilisateur courant."""
+"""Hashage des mots de passe, creation/vérification du JWT et dependance utilisateur courant."""
 
 from datetime import datetime, timedelta, timezone
 from typing import Optional
@@ -12,8 +12,8 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app import models
 
-# Clé secrète pour signer les JWT. À surcharger via variable d'environnement
-# en production ; une valeur par défaut est fournie pour simplifier ce test.
+# Cle secrete pour signer les JWT. a surcharger via variable d'environnement
+# en production ; une valeur par defaut est fournie pour simplifier ce test.
 SECRET_KEY = "change-this-secret-key-in-production"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24h
@@ -44,7 +44,7 @@ def get_current_user(
 ) -> models.User:
     credentials_error = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Identifiants invalides ou expirés",
+        detail="Identifiants invalides ou expires",
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])

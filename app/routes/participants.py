@@ -16,7 +16,7 @@ def ensure_owner(project: models.Project, user: models.User):
     if project.owner_id != user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Seul le propriétaire peut gérer les participants",
+            detail="Seul le proprietaire peut gerer les participants",
         )
 
 
@@ -34,19 +34,19 @@ def add_participant(
     if not user_to_add:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Aucun utilisateur trouvé avec cet email",
+            detail="Aucun utilisateur trouve avec cet email",
         )
 
     if user_to_add.id == project.owner_id:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Le propriétaire est déjà associé au projet",
+            detail="Le proprietaire est deja associe au projet",
         )
 
     if any(p.id == user_to_add.id for p in project.participants):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cet utilisateur est déjà participant du projet",
+            detail="Cet utilisateur est deja participant du projet",
         )
 
     project.participants.append(user_to_add)

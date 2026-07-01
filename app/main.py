@@ -1,4 +1,6 @@
-"""Point d'entrée de l'API : configuration FastAPI, CORS et démarrage."""
+"""
+Point d'entree de l'API : configuration FastAPI, CORS et demarrage.
+"""
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -45,7 +47,9 @@ app.include_router(participants_routes.router)
 
 
 def create_demo_account():
-    """Crée un compte de démonstration au premier démarrage s'il n'existe pas déjà."""
+    """
+    Cree un compte de demonstration au premier demarrage s'il n'existe pas deja
+    """
     db = SessionLocal()
     try:
         existing = db.query(models.User).filter(models.User.email == "demo@demo.com").first()
@@ -53,7 +57,7 @@ def create_demo_account():
             demo_user = models.User(
                 email="demo@demo.com",
                 password_hash=auth.hash_password("demo1234"),
-                name="Démo",
+                name="Demo",
             )
             db.add(demo_user)
             db.commit()

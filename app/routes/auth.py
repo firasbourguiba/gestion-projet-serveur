@@ -15,7 +15,7 @@ def register(payload: schemas.UserRegister, db: Session = Depends(get_db)):
     if existing:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cet email est déjà utilisé",
+            detail="Cet email est deja utilise",
         )
 
     user = models.User(

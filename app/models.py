@@ -1,4 +1,7 @@
-"""Modèles SQLAlchemy : User, Project, Task et la table de liaison participants."""
+"""
+Modeles SQLAlchemy : User, Project, Task et la table de liaison participants
+
+"""
 
 from sqlalchemy import Column, Integer, String, ForeignKey, Table
 from sqlalchemy.orm import relationship

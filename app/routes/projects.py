@@ -21,12 +21,12 @@ def get_project_or_404(project_id: int, db: Session) -> models.Project:
 
 
 def ensure_project_access(project: models.Project, user: models.User):
-    """Vérifie que l'utilisateur est propriétaire ou participant du projet."""
+    """Verifie que l'utilisateur est proprietaire ou participant du projet."""
     is_owner = project.owner_id == user.id
     is_participant = any(p.id == user.id for p in project.participants)
     if not (is_owner or is_participant):
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="Accès non autorisé à ce projet"
+            status_code=status.HTTP_403_FORBIDDEN, detail="Acces non autorise a ce projet"
         )
 
 
@@ -52,7 +52,7 @@ def list_projects(
     db: Session = Depends(get_db),
     current_user: models.User = Depends(auth.get_current_user),
 ):
-    # Projets dont l'utilisateur est propriétaire OU participant.
+    # Projets dont l'utilisateur est proprietaire OU participant.
     owned = db.query(models.Project).filter(models.Project.owner_id == current_user.id)
     participating = current_user.participations
     all_projects = {p.id: p for p in owned}
@@ -83,7 +83,7 @@ def update_project(
     if project.owner_id != current_user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Seul le propriétaire peut modifier ce projet",
+            detail="Seul le proprietaire peut modifier ce projet",
         )
 
     if payload.title is not None:

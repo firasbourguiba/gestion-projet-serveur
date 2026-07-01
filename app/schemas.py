@@ -1,10 +1,10 @@
-"""Schémas Pydantic utilisés pour valider les entrées et formater les sorties de l'API."""
+"""Schemas Pydantic utilises pour valider les entrees et formater les sorties de l'API."""
 
 from typing import Optional, List
 from pydantic import BaseModel, EmailStr, ConfigDict
 
 
-# ---------- Auth / User ----------
+# Auth / User
 
 class UserRegister(BaseModel):
     email: EmailStr
@@ -30,7 +30,7 @@ class Token(BaseModel):
     token_type: str = "bearer"
 
 
-# ---------- Project ----------
+# Project
 
 class ProjectCreate(BaseModel):
     title: str
@@ -61,7 +61,7 @@ class ProjectListOut(BaseModel):
     owner_id: int
 
 
-# ---------- Task ----------
+#  Task 
 
 class TaskCreate(BaseModel):
     title: str
@@ -88,7 +88,7 @@ class TaskOut(BaseModel):
     assignee_id: Optional[int] = None
 
 
-# ---------- Participants ----------
+#  Participants 
 
 class ParticipantAdd(BaseModel):
     email: EmailStr

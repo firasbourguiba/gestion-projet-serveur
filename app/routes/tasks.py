@@ -1,4 +1,4 @@
-"""Routes de gestion des tâches."""
+"""Routes de gestion des teches."""
 
 from typing import List, Optional
 
@@ -18,26 +18,26 @@ def get_task_or_404(task_id: int, db: Session) -> models.Task:
     task = db.query(models.Task).filter(models.Task.id == task_id).first()
     if not task:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Tâche introuvable"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Tache introuvable"
         )
     return task
 
 
 def ensure_assignee_is_allowed(project: models.Project, assignee_id: Optional[int], db: Session):
-    """Une tâche ne peut être assignée qu'au propriétaire ou à un participant du projet."""
+    """Une tache ne peut etre assignee qu'au proprietaire ou a un participant du projet."""
     if assignee_id is None:
         return
     user = db.query(models.User).filter(models.User.id == assignee_id).first()
     if not user:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Utilisateur assigné introuvable"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Utilisateur assigne introuvable"
         )
     is_owner = project.owner_id == assignee_id
     is_participant = any(p.id == assignee_id for p in project.participants)
     if not (is_owner or is_participant):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="La tâche ne peut être assignée qu'au propriétaire ou à un participant du projet",
+            detail="La tache ne peut etre assignee qu'au proprietaire ou a un participant du projet",
         )
 
 
@@ -59,7 +59,7 @@ def create_task(
     if status_value not in VALID_STATUSES:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Statut invalide, valeurs autorisées : {sorted(VALID_STATUSES)}",
+            detail=f"Statut invalide, valeurs autorisees : {sorted(VALID_STATUSES)}",
         )
 
     ensure_assignee_is_allowed(project, payload.assignee_id, db)
@@ -92,7 +92,7 @@ def list_tasks(
         if status_filter not in VALID_STATUSES:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Statut invalide, valeurs autorisées : {sorted(VALID_STATUSES)}",
+                detail=f"Statut invalide, valeurs autorisees : {sorted(VALID_STATUSES)}",
             )
         query = query.filter(models.Task.status == status_filter)
 
@@ -130,7 +130,7 @@ def update_task(
         if payload.status not in VALID_STATUSES:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Statut invalide, valeurs autorisées : {sorted(VALID_STATUSES)}",
+                detail=f"Statut invalide, valeurs autorisees : {sorted(VALID_STATUSES)}",
             )
         task.status = payload.status
     if payload.assignee_id is not None:
